@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.uefs.ecomp.UEFSflix.model;
+package br.uefs.ecomp.UEFSflix.model.scl;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 /**
  * @author Hugo and Filipe
  */
 public class Client {
+    private Socket client;
+
     public static void main(String[] args) throws Exception {
         Socket socket = new Socket("localhost", 2525);
         System.out.println("Aguardando resposta do servidor");
@@ -51,6 +50,14 @@ public class Client {
 //                 break;}
         }
         //System.out.println("Mensagem enviada ao servidor: "+ string);
+    }
+
+    public void connect() throws IOException {
+        client = new Socket("127.0.0.1",12345);
+    }
+
+    public void disconnect() throws IOException {
+        client.close();
     }
 
 }

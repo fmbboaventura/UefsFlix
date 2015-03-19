@@ -20,7 +20,7 @@ import java.sql.SQLException;
  *
  * @author Hugo
  */
-public class Servidor  {
+public class Server {
     
     public static boolean validar(String nome, String senha) throws SQLException{
         Conexao a = new Conexao();

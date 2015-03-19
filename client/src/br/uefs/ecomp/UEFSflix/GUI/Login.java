@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.uefs.ecomp.UEFSflix.GUI;
+package br.uefs.ecomp.UEFSflix.gui;
+
+import br.uefs.ecomp.UEFSflix.controller.LoginController;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,20 +18,37 @@ import javax.swing.*;
  */
 public class Login {
 
-    public static void main(String[] args) {
+    public Login() {
         GridBagConstraints gbc = new GridBagConstraints();
         JFrame frame = new JFrame("UEFSflix");
         
         Container grid = new JPanel(new GridBagLayout());
-        JLabel label = new JLabel("", JLabel.CENTER);
 
-        JLabel nome = new JLabel("Login: ", JLabel.CENTER);
-        JTextField nomeCampo = new JTextField("                 ");
-        JLabel senha = new JLabel("Senha: ", JLabel.CENTER);
-        JTextField senhaCampo = new JPasswordField("       ");
-        JButton ok = new JButton("OK");
+        /* Prefixos:
+         * Label = lbl
+         * textfielf = txt
+         * btn = button
+         */
+        JLabel lblName = new JLabel("Login: ", JLabel.CENTER);
+        final JTextField txtName = new JTextField();
+        txtName.setColumns(10);
+
+        JLabel lblPassword = new JLabel("Senha: ", JLabel.CENTER);
+        final JTextField txtPassword = new JPasswordField();
+        txtPassword.setColumns(10);
+
+        final JButton btnOk = new JButton("OK");
+        btnOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = txtName.getText();
+                String password = txtPassword.getText();
+                System.out.println(name + ' ' + password);
+                LoginController.getInstance().requestLogin(name, password);
+            }
+        });
         
-//        ok.addActionListener(new ActionListener() {
+//        btnOk.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent ae) {
 //               try {
@@ -44,29 +63,28 @@ public class Login {
         
         gbc.gridx = 0;
         gbc.gridy = 0;
-        grid.add(nome, gbc);
+        grid.add(lblName, gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 0;
-        grid.add(nomeCampo, gbc);
+        grid.add(txtName, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 1;
-        grid.add(senha, gbc);
+        grid.add(lblPassword, gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 1;
-        grid.add(senhaCampo, gbc);
+        grid.add(txtPassword, gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 2;
-        grid.add(ok, gbc);
+        grid.add(btnOk, gbc);
         
 
         frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(grid);
-        frame.setLocationRelativeTo(null);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
