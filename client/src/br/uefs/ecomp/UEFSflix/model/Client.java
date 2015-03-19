@@ -16,7 +16,7 @@ import java.util.Scanner;
 /**
  * @author Hugo and Filipe
  */
-public class Cliente {
+public class Client {
     public static void main(String[] args) throws Exception {
         Socket socket = new Socket("localhost", 2525);
         System.out.println("Aguardando resposta do servidor");
@@ -43,11 +43,11 @@ public class Cliente {
             System.out.println(in.readLine());
 
 //             if(string.equals("fim")){
-//                 System.out.println("Solicitação de encerramento do Cliente");
+//                 System.out.println("Solicitação de encerramento do Client");
 //                 in.close();
 //                 out.close();
 //                 socket.close();
-//                 System.out.println("Cliente encerrado");
+//                 System.out.println("Client encerrado");
 //                 break;}
         }
         //System.out.println("Mensagem enviada ao servidor: "+ string);
