@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * @author Hugo
+ * @author Hugo and Filipe
  */
 public class Cliente {
     public static void main(String[] args) throws Exception {
@@ -48,7 +48,7 @@ public class Cliente {
 //                 out.close();
 //                 socket.close();
 //                 System.out.println("Cliente encerrado");
-//                 break;
+//                 break;}
         }
         //System.out.println("Mensagem enviada ao servidor: "+ string);
     }
