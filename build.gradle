@@ -1,0 +1,16 @@
+allprojects {
+    apply plugin: "idea"
+
+    version = '1.0'
+    ext {
+        appName = 'UefsFlix'
+    }
+}
+
+project(":client") {
+    apply plugin: "java"
+}
+
+project(":server") {
+    apply plugin: "java"
+}
