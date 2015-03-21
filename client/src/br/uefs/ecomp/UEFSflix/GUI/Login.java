@@ -5,7 +5,7 @@
  */
 package br.uefs.ecomp.UEFSflix.gui;
 
-import br.uefs.ecomp.UEFSflix.controller.LoginController;
+import br.uefs.ecomp.UEFSflix.controller.RequestController;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,7 +44,7 @@ public class Login {
                 String name = txtName.getText();
                 String password = txtPassword.getText();
                 System.out.println(name + ' ' + password);
-                LoginController.getInstance().requestLogin(name, password);
+                RequestController.getInstance().requestLogin(name, password);
             }
         });
         

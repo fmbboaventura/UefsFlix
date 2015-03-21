@@ -14,6 +14,12 @@ import java.util.Scanner;
  * @author Hugo and Filipe
  */
 public class Client {
+     public static enum RequestType{
+         LOGIN,
+         LOGOUT,
+         QUERY,
+         DOWNLOAD
+     }
     private Socket client;
 
     public static void main(String[] args) throws Exception {
@@ -52,12 +58,18 @@ public class Client {
         //System.out.println("Mensagem enviada ao servidor: "+ string);
     }
 
-    public void connect() throws IOException {
+    public void connect(String name, String password) throws IOException {
         client = new Socket("127.0.0.1",12345);
+        request(RequestType.LOGIN.toString(), name, password);
     }
 
     public void disconnect() throws IOException {
         client.close();
+    }
+
+    private void request(String... args) throws IOException {
+        ObjectOutputStream stream = new ObjectOutputStream(client.getOutputStream());
+        stream.writeObject(args);
     }
 
 }
