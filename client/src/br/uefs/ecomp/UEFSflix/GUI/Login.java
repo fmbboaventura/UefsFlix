@@ -47,6 +47,14 @@ public class Login {
                 RequestController.getInstance().requestLogin(name, password);
             }
         });
+
+        JButton btnMsg = new JButton("msg");
+        btnMsg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RequestController.getInstance().msg();
+            }
+        });
         
 //        btnOk.addActionListener(new ActionListener() {
 //            @Override
@@ -80,6 +88,10 @@ public class Login {
         gbc.gridx = 1;
         gbc.gridy = 2;
         grid.add(btnOk, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        grid.add(btnMsg, gbc);
         
 
         frame.setSize(500, 500);

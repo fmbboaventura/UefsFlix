@@ -24,17 +24,9 @@ public class Server {
         serverSocket = new ServerSocket(port);
         System.out.println("Porta " + port + " Aberta!");
 
-        while (true){
+        while (true) {
             Socket socket = serverSocket.accept();
-            ObjectInputStream stream = new ObjectInputStream(socket.getInputStream());
-            try {
-                String[] array = (String[]) stream.readObject();
-                for(String s : array){
-                    System.out.println(s);
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            new Thread(new ConnectionListener(socket)).start();
         }
     }
 
@@ -88,10 +80,34 @@ public class Server {
 
     }
 
-    /**
-     * Lê o {@link java.io.InputStream} do cliente conectado.
-     */
-    public void readMessage(){
+    private class ConnectionListener implements Runnable {
 
+        private ObjectInputStream inputStream;
+
+        public ConnectionListener(Socket socket) throws IOException {
+            inputStream = new ObjectInputStream(socket.getInputStream());
+        }
+
+        @Override
+        public void run() {
+            String[] array;
+            try {
+                while ((array = (String[]) inputStream.readObject()) != null) {
+                    String requestType = array[0];
+                    if (requestType.equals("LOGIN")){
+                            validar(array[1], array[2]);
+                    }
+//                    for (String s : array) {
+//                        System.out.println(s);
+//                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

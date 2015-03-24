@@ -26,4 +26,12 @@ public class RequestController {
             e.printStackTrace();
         }
     }
+
+    public void msg(){
+        try {
+            client.msg();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

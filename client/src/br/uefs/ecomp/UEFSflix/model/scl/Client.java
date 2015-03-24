@@ -14,7 +14,9 @@ import java.util.Scanner;
  * @author Hugo and Filipe
  */
 public class Client {
-     public static enum RequestType{
+    private ObjectOutputStream stream;
+
+    public static enum RequestType{
          LOGIN,
          LOGOUT,
          QUERY,
@@ -59,7 +61,8 @@ public class Client {
     }
 
     public void connect(String name, String password) throws IOException {
-        client = new Socket("127.0.0.1",12345);
+        client = new Socket("localhost",12345);
+        stream = new ObjectOutputStream(client.getOutputStream());
         request(RequestType.LOGIN.toString(), name, password);
     }
 
@@ -68,8 +71,11 @@ public class Client {
     }
 
     private void request(String... args) throws IOException {
-        ObjectOutputStream stream = new ObjectOutputStream(client.getOutputStream());
         stream.writeObject(args);
+    }
+
+    public void msg() throws IOException {
+        this.request("testando");
     }
 
 }
