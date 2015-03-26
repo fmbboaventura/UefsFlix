@@ -7,14 +7,14 @@ package br.uefs.ecomp.UEFSflix.model.scl;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 /**
  * @author Hugo and Filipe
  */
 public class Client {
-    private ObjectOutputStream stream;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
 
     public static enum RequestType{
          LOGIN,
@@ -62,7 +62,8 @@ public class Client {
 
     public void connect(String name, String password) throws IOException {
         client = new Socket("localhost",12345);
-        stream = new ObjectOutputStream(client.getOutputStream());
+        outputStream = new ObjectOutputStream(client.getOutputStream());
+        inputStream = new ObjectInputStream(client.getInputStream());
         request(RequestType.LOGIN.toString(), name, password);
     }
 
@@ -71,11 +72,23 @@ public class Client {
     }
 
     private void request(String... args) throws IOException {
-        stream.writeObject(args);
+        outputStream.writeObject(args);
     }
 
-    public void msg() throws IOException {
+    public void msg() throws IOException, ClassNotFoundException {
         this.request("testando");
+        File f;
+        if ((f = (File) inputStream.readObject()) != null){
+            FileInputStream input = new FileInputStream(f);
+            FileOutputStream stream = new FileOutputStream(new File("recived" + File.separator + f.getName()));
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = input.read(buffer)) > 0) {
+                stream.write(buffer, 0, length);
+            }
+            input.close();
+            stream.close();
+        }
     }
 
 }

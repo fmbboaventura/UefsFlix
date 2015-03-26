@@ -32,6 +32,8 @@ public class RequestController {
             client.msg();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 
 /**
@@ -19,6 +20,7 @@ public class Server {
 
     private ServerSocket serverSocket;
     private final int port = 12345;
+    private final HashMap<String, RequestHandler> requestHandlers;
 
     public Server() throws IOException {
         serverSocket = new ServerSocket(port);
@@ -83,9 +85,11 @@ public class Server {
     private class ConnectionListener implements Runnable {
 
         private ObjectInputStream inputStream;
+        private ObjectOutputStream outputStream;
 
         public ConnectionListener(Socket socket) throws IOException {
             inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
         }
 
         @Override
@@ -95,7 +99,8 @@ public class Server {
                 while ((array = (String[]) inputStream.readObject()) != null) {
                     String requestType = array[0];
                     if (requestType.equals("LOGIN")){
-                            validar(array[1], array[2]);
+                        outputStream.writeObject(new File("pitfall.flv"));
+                            //validar(array[1], array[2]);
                     }
 //                    for (String s : array) {
 //                        System.out.println(s);
@@ -105,9 +110,11 @@ public class Server {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
+    }
+
+    private interface RequestHandler{
+        void handle(String[] clientMessage, ObjectOutputStream outputStream);
     }
 }
